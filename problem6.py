@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from problem3 import filtering, sum_column
-from problem5 import runs_created
+from problem5 import runs_created, batting_average, on_base_percentage
 #-------------------------------------------------------------------------
 '''
     Problem 6: Player selection for Oakland A's Team (OAK)
@@ -21,6 +21,8 @@ def sum_salaries(T, D):
     #########################################
     ## INSERT YOUR CODE HERE
 
+    init =filtering(D, key ='playerID', values = T)
+    S = sum_column( init, key='salary')
 
     #########################################
     return S
@@ -46,6 +48,8 @@ def sum_stat(T, D, key='H'):
     #########################################
     ## INSERT YOUR CODE HERE
 
+    init = filtering (D, key = 'playerID', values = T)
+    S = sum_column(init, key)
 
     #########################################
     return S
@@ -68,13 +72,14 @@ def runs(T, D):
     '''
     #########################################
     ## INSERT YOUR CODE HERE
-
-
-
-
-
-
-
+    H = sum_stat(T,D,key='H')
+    _2B= sum_stat(T,D,key='2B') 
+    _3B = sum_stat(T,D,key='3B')
+    HR = sum_stat(T,D,key='HR')
+    BB = sum_stat(T,D,key='BB')
+    AB = sum_stat(T,D,key='AB')
+    RC = runs_created(H, _2B, _3B, HR, BB, AB)
+    
     #########################################
     return RC 
 
@@ -102,11 +107,8 @@ def scout():
     #########################################
     ## INSERT YOUR CODE HERE
 
-
-
-
-
-
+    T = ['tavarju01','pinedlu01','walketo04']
+   
     #########################################
     return T
 
@@ -133,14 +135,11 @@ def rank_BA(D, min_AB=300,max_salary=1200000):
     #########################################
     ## INSERT YOUR CODE HERE
 
-
-
-
-
-
-
-
-
+    D.loc[D['AB']<min_AB, 'BA'] = 0
+    D.loc[D['salary']>=max_salary,'BA'] = 0
+    D.loc[D['BA']!=0, 'BA'] = batting_average(D['H'],D['AB'])
+    D.sort_values(by='BA',ascending=False, inplace=True)
+    R = D['playerID'].values.tolist()
 
     #########################################
     return R
@@ -167,24 +166,12 @@ def rank_OBP(D,min_AB=300,max_salary=1200000):
     #########################################
     ## INSERT YOUR CODE HERE
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    D.loc[D['AB']<min_AB, 'BA'] = 0
+    D.loc[D['salary']>=max_salary, 'BA'] = 0
+    D.loc[D['AB']<min_AB, 'BA'] = 0
+    D.loc[D['BA']!=0, 'BA'] = on_base_percentage(D['H'], D['AB'], D['BB'], D['HBP'], D['SF'])        
+    D.sort_values(by='BA', ascending=False, inplace=True)
+    R=D['playerID'].values.tolist()
 
     #########################################
     return R 

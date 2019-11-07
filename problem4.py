@@ -24,6 +24,8 @@ def load_batting(filename='Batting.csv'):
     #########################################
     ## INSERT YOUR CODE HERE
 
+    X = pd.read_csv(filename)
+    
     #########################################
     return X 
 
@@ -51,6 +53,8 @@ def search_batting(X, year=2001):
     #########################################
     ## INSERT YOUR CODE HERE
 
+    Y= X.loc[X['yearID'] == year]
+    
     #########################################
     return Y 
 
@@ -81,6 +85,8 @@ def aggregate_batting(X):
     '''
     #########################################
     ## INSERT YOUR CODE HERE
+
+    Y = aggregate(X, key = 'playerID')
 
     #########################################
     return Y 
@@ -115,6 +121,8 @@ def join_batting(X,Y):
     #########################################
     ## INSERT YOUR CODE HERE
 
+    Z = join(X,Y, key = 'playerID')
+    
     #########################################
     return Z 
 
@@ -150,6 +158,8 @@ def search_salary(X, year=2002):
     #########################################
     ## INSERT YOUR CODE HERE
 
+    Y = X.loc[X['yearID']== year]
+    
     #########################################
     return Y 
 
@@ -179,6 +189,8 @@ def join_salary(X,Y):
     #########################################
     ## INSERT YOUR CODE HERE
 
+    Z= join (X,Y, key = 'playerID')
+    
     #########################################
     return Z 
 

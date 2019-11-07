@@ -1,4 +1,6 @@
 from problem1 import elo_rating
+from operator import itemgetter, attrgetter
+import pandas as pd
 import numpy as np
 #-------------------------------------------------------------------------
 '''
@@ -25,12 +27,12 @@ def import_team_names(filename ='ncaa_teams.txt'):
     #########################################
     ## INSERT YOUR CODE HERE
 
+    team_names = np.loadtxt(filename,  delimiter='/n', dtype='str')
+
     #########################################
     return team_names
 
     ''' TEST: Now you can test the correctness of your code above by typing `nosetests -v test2.py:test_import_team_names' in the terminal.  '''
-
-
 
 #--------------------------
 def import_W(filename ='ncaa_results.csv'):
@@ -46,6 +48,8 @@ def import_W(filename ='ncaa_results.csv'):
     '''
     #########################################
     ## INSERT YOUR CODE HERE
+
+    W = np.loadtxt(filename, delimiter=',', dtype='int')
 
     #########################################
     return W
@@ -76,22 +80,31 @@ def team_rating(resultfile = 'ncaa_results.csv',
     '''
     #########################################
     ## INSERT YOUR CODE HERE
-
+    top_teams= []
+    top_ratings= []
     # load team names from 'teamfile'
-
-
+    allTeams = import_team_names(teamfile)
     # load game results from 'resultfile'
-
-
-
-
+    allResults = import_W(resultfile)
+    totalTeams = len(allTeams)    
     # compute Elo rating of all the teams
-
-
+    allElos = elo_rating(allResults, totalTeams, K= 16.)
     # sort team names according to their Elo ratings 
+    allData = np.vstack((allElos, allTeams)).T.tolist()
+    #print(allData)
+    #sortAllData = sorted(allData, key=itemgetter(0), reverse=True)
+    sortAllData = sorted(allData, key=lambda x: x[0], reverse=True)   
+    print(sortAllData)
 
+    
+    for i, team in enumerate(allTeams):
+        top_teams.append(sortAllData[i][1])
+   
+    for i, result in enumerate(allElos):
+       top_ratings.append(float(sortAllData[i][0]))
 
-
+    #print(top_teams)
+    #print(top_ratings)
     #########################################
     return top_teams, top_ratings
 

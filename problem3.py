@@ -32,10 +32,9 @@ def dataframe():
     #########################################
     ## INSERT YOUR CODE HERE
 
-
-
-
-
+    d = [[1,4], [2,5], [3,6]]
+    X = pd.DataFrame(d, columns= ['height', 'width'])
+         
     #########################################
     return X
 
@@ -56,6 +55,8 @@ def load_csv(filename="A.csv"):
     #########################################
     ## INSERT YOUR CODE HERE
 
+    X = pd.read_csv(filename)
+    
     #########################################
     return X
 
@@ -77,6 +78,8 @@ def search_height(X, t=2):
     #########################################
     ## INSERT YOUR CODE HERE
 
+    Y = X[X.height >= t]
+    
     #########################################
     return Y 
 
@@ -97,6 +100,8 @@ def save_csv(X, filename="A2.csv"):
     '''
     #########################################
     ## INSERT YOUR CODE HERE
+
+    X.to_csv(filename, index=False)
 
     #########################################
     return 
@@ -128,6 +133,8 @@ def sum_column(X, key='count'):
     '''
     #########################################
     ## INSERT YOUR CODE HERE
+
+    S = X[key].sum()
 
     #########################################
     return S 
@@ -164,6 +171,8 @@ def aggregate(X, key = 'ID'):
     #########################################
     ## INSERT YOUR CODE HERE
 
+    dataF = X.groupby(key).sum()
+    Y = dataF.reset_index()
 
     #########################################
     return Y
@@ -204,6 +213,8 @@ def join(X,Y, key = 'ID'):
     #########################################
     ## INSERT YOUR CODE HERE
 
+    Z = X.merge(Y, on=[key])
+
     #########################################
     return Z
 
@@ -238,6 +249,8 @@ def filtering(X, key = 'ID', values=[1,3]):
     #########################################
     ## INSERT YOUR CODE HERE
 
+    Y = X[X[key].isin(values)]
+    
     #########################################
     return Y
 

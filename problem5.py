@@ -19,6 +19,8 @@ def batting_average(H, AB):
     #########################################
     ## INSERT YOUR CODE HERE
 
+    BA = (H)/(AB)
+    
     #########################################
     return BA
 
@@ -44,8 +46,8 @@ def on_base_percentage(H, AB, BB, HBP, SF):
     #########################################
     ## INSERT YOUR CODE HERE
 
-
-
+    OBP = (H + BB + HBP) / (AB + BB + HBP + SF)
+       
     #########################################
     return OBP 
 
@@ -69,10 +71,7 @@ def slugging_percentage(H, _2B, _3B, HR, AB):
     #########################################
     ## INSERT YOUR CODE HERE
 
-    # compute the total bases
-
-    # compute SLG
-
+    SLG = (H + _2B + (2 * _3B) + ( 3 * HR))/ AB
 
     #########################################
     return SLG 
@@ -97,12 +96,10 @@ def runs_created(H, _2B, _3B, HR, BB, AB):
             RC: the expected runs created/scored by a team, a float scalar.
     '''
     #########################################
-    ## INSERT YOUR CODE HERE
-
-    # compute the total bases
-
-    # compute runs created
-
+    ## INSERT YOUR CODE HERE 
+ 
+    total_bases = (H + _2B + (2 * _3B) + ( 3 * HR))
+    RC = (total_bases * (H + BB)) / (AB + BB)
 
     #########################################
     return RC 
@@ -125,7 +122,7 @@ def win_ratio(RC, RA):
     #########################################
     ## INSERT YOUR CODE HERE
 
-
+    WR =  (RC**2)/ ((RC**2)+ (RA**2))
 
     #########################################
     return WR 
